@@ -9,7 +9,7 @@
 A transition for your SwiftUI views that simulates the 1993 classic DOOM screen wipe (the melting effect, you know the one).
 
 > [!IMPORTANT]  
-> This transition utilizes SwiftUI 5's [.layerEffect](://developer.apple.com/documentation/swiftui/view/layereffect(_:maxsampleoffset:isenabled:)). AppKit/UIKit powered views will *not* work. This includes views like `TextField`.
+> This transition utilizes SwiftUI 5's [.layerEffect](https://developer.apple.com/documentation/swiftui/view/layereffect(_:maxsampleoffset:isenabled:)). AppKit/UIKit powered views will *not* work. This includes views like `TextField`.
 
 ## How to use
 Use it like any other transition:
