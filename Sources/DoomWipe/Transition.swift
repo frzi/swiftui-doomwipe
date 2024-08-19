@@ -1,5 +1,5 @@
 /*
- *  Transition.metal
+ *  Transition.swift
  *  Created by Freek (github.com/frzi).
  */
 
@@ -55,19 +55,16 @@ extension AnyTransition {
 				identity: DoomWipeTransitionModifier(animationPosition: 0)
 			)
 		)
-//		.modifier(
-//			active: DoomWipeTransitionModifier(animationPosition: 1),
-//			identity: DoomWipeTransitionModifier(animationPosition: 0)
-//		)
 	}
 
-	public static func doomWipe(
-		direction: WipeDirection = .down,
-		randomOffset: CGFloat = 0
-	) -> AnyTransition {
-		.modifier(
-			active: DoomWipeTransitionModifier(animationPosition: 1, direction: direction),
-			identity: DoomWipeTransitionModifier(animationPosition: 0, direction: direction)
+	/// A DOOM wipe transition with a given direction the pixels should flow.
+	public static func doomWipe(direction: WipeDirection) -> AnyTransition {
+		.asymmetric(
+			insertion: .identity,
+			removal: .modifier(
+				active: DoomWipeTransitionModifier(animationPosition: 1, direction: direction),
+				identity: DoomWipeTransitionModifier(animationPosition: 0, direction: direction)
+			)
 		)
 	}
 }
