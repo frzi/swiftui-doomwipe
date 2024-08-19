@@ -17,6 +17,11 @@ let package = Package(
 			targets: ["DoomWipe"]),
 	],
 	targets: [
-		.target(name: "DoomWipe"),
+		.target(
+			name: "DoomWipe",
+			resources: [
+				.process("Resources/DoomWipe.metal")
+			]
+		),
 	]
 )
