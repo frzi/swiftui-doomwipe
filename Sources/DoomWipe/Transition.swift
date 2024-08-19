@@ -1,16 +1,15 @@
+/*
+ *  Transition.metal
+ *  Created by Freek (github.com/frzi).
+ */
+
 import Metal
 import SwiftUI
-
-
-public enum WipeDirection: CGFloat {
-	case down = 1
-	case up = -1
-}
 
 /// The Doom Wipe transition modifier
 ///
 /// This view modifier composites the view and applies the Doom wipe layer effect.
-struct DoomWipeTransitionModifier: ViewModifier, Animatable {
+struct DoomWipeTransitionModifier: ViewModifier {
 	private static var globalRandomOffset = 0
 
 	private static func globalAdvancedRandomOffset() -> Int {
@@ -25,16 +24,12 @@ struct DoomWipeTransitionModifier: ViewModifier, Animatable {
 	var direction: WipeDirection = .down
 
 	private var shader: Shader {
-		Shader(
-			function: ShaderFunction(library: .bundle(.module), name: "doomWipe"),
-			arguments: [
-				.float2(viewDimensions), // View dimensions.
-				.float2(CGSize(width: 2, height: 2)), // Transition scale.
-				.float(animationPosition), // Animation position.
-				.float(CGFloat(randomOffset)), // Randomness offset.
-				.float(direction.rawValue), // Direction (1 = down (original), -1 = up).
-			]
-		)
+		DoomWipeShader(
+			dimensions: viewDimensions,
+			animationPosition: animationPosition,
+			randomOffset: randomOffset,
+			direction: direction
+		).shader
 	}
 
 	func body(content: Content) -> some View {

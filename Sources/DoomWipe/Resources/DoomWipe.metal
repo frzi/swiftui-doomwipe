@@ -1,5 +1,5 @@
 /*
- *  DoomMelt.metal
+ *  DoomWipe.metal
  *  Created by Freek (github.com/frzi).
  */
 
