@@ -1,0 +1,1 @@
+# Doom Wipe transition for SwiftUI
