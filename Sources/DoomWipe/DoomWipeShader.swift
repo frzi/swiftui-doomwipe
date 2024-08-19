@@ -6,8 +6,11 @@
 import Metal
 import SwiftUI
 
+/// Direction of the wipe effect.
 public enum WipeDirection: CGFloat {
+	/// The content flows downwards.
 	case down = 1
+	/// The content flows upwards.
 	case up = -1
 }
 
