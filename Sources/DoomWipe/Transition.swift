@@ -3,7 +3,6 @@
  *  Created by Freek (github.com/frzi).
  */
 
-import Metal
 import SwiftUI
 
 /// The Doom Wipe transition modifier
@@ -21,13 +20,13 @@ struct DoomWipeTransitionModifier: ViewModifier {
 	@State private var randomOffset = Self.globalAdvancedRandomOffset()
 
 	var animationPosition: CGFloat = 0
-	var direction: WipeDirection = .down
+	var direction: DoomWipeShader.WipeDirection = .down
 
 	private var shader: Shader {
 		DoomWipeShader(
 			dimensions: viewDimensions,
 			animationPosition: animationPosition,
-			randomOffset: randomOffset,
+			seed: randomOffset,
 			direction: direction
 		).shader
 	}
@@ -58,7 +57,7 @@ extension AnyTransition {
 	}
 
 	/// A DOOM wipe transition with a given direction the pixels should flow.
-	public static func doomWipe(direction: WipeDirection) -> AnyTransition {
+	public static func doomWipe(direction: DoomWipeShader.WipeDirection) -> AnyTransition {
 		.asymmetric(
 			insertion: .identity,
 			removal: .modifier(

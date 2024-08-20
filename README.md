@@ -15,12 +15,16 @@ A transition for your SwiftUI views that simulates the 1993 classic DOOM screen 
 ## How to use
 Use it like any other transition:
 ```swift
+import DoomWipe
+
 MyView()
 	.transition(.doomWipe)
 ```
 
 Additionally, you can initialize a `Shader` with custom parameters to setup your own transitions. Or to apply the `.layerEffect` wherever.
 ```swift
+import DoomWipe
+
 let doomWipe = DoomWipeShader(
 	dimensions: viewDimensions,
 	animationPosition: time,
