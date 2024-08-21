@@ -9,26 +9,31 @@ import SwiftUI
 ///
 /// This view modifier composites the view and applies the Doom wipe layer effect.
 struct DoomWipeTransitionModifier: ViewModifier {
-	private static var globalRandomOffset = 0
+	private static var globalRandomSeed = 0
 
-	private static func globalAdvancedRandomOffset() -> Int {
-		globalRandomOffset += 1
-		return globalRandomOffset
+	private static func globalAdvancedRandomSeed() -> Int {
+		globalRandomSeed += 1
+		return globalRandomSeed
 	}
 
 	@State private var viewDimensions: CGSize = .zero
-	@State private var randomOffset = Self.globalAdvancedRandomOffset()
+	@State private var randomSeed = Self.globalAdvancedRandomSeed()
 
-	var animationPosition: CGFloat = 0
-	var direction: DoomWipeShader.WipeDirection = .down
+	let animationPosition: CGFloat
+	let direction: DoomWipeShader.WipeDirection
 
 	private var shader: Shader {
 		DoomWipeShader(
 			dimensions: viewDimensions,
 			animationPosition: animationPosition,
-			seed: randomOffset,
+			seed: randomSeed,
 			direction: direction
 		).shader
+	}
+
+	init(animationPosition: CGFloat, direction: DoomWipeShader.WipeDirection = .down) {
+		self.animationPosition = animationPosition
+		self.direction = direction
 	}
 
 	func body(content: Content) -> some View {
