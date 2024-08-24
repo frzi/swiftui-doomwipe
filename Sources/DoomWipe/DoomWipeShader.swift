@@ -38,16 +38,16 @@ public struct DoomWipeShader {
 	/// - Parameter animationPosition: The current time position of the animation. 0 = start, 1 = end.`
 	/// - Parameter seed: The random seed that affects the pattern of the wipe effect.
 	/// - Parameter direction: Whether the wipe goes downwards (original), or upwards.
-	public init(dimensions: CGSize, animationPosition: CGFloat, seed: Int = 0, direction: WipeDirection) {
+	public init(progress: CGFloat, seed: Int = 0, direction: WipeDirection) {
 		let offsets = Self.getOffset(seed: seed)
+		let scale = CGSize(width: 2, height: 2)
 
 		shader = Shader(
 			function: ShaderFunction(library: .bundle(.module), name: "doomWipe"),
 			arguments: [
-				.data(offsets),
-				.float2(dimensions), // View dimensions.
-				.float2(CGSize(width: 2, height: 2)), // Transition scale.
-				.float(min(max(animationPosition, 0), 1)), // Animation position.
+				.data(offsets), // Offset pattern.
+				.float2(scale), // Transition scale.
+				.float(min(max(progress, 0), 1)), // Animation position.
 				.float(direction.rawValue), // Direction (1 = down (original), -1 = up).
 			]
 		)

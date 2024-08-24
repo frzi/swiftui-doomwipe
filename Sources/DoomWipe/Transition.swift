@@ -3,6 +3,7 @@
  *  Created by Freek (github.com/frzi).
  */
 
+import AVKit
 import SwiftUI
 
 /// The Doom Wipe transition modifier
@@ -16,23 +17,21 @@ struct DoomWipeTransitionModifier: ViewModifier {
 		return globalRandomSeed
 	}
 
-	@State private var viewDimensions: CGSize = .zero
 	@State private var randomSeed = Self.globalAdvancedRandomSeed()
 
-	let animationPosition: CGFloat
+	let progress: CGFloat
 	let direction: DoomWipeShader.WipeDirection
 
 	private var shader: Shader {
 		DoomWipeShader(
-			dimensions: viewDimensions,
-			animationPosition: animationPosition,
+			progress: progress,
 			seed: randomSeed,
 			direction: direction
 		).shader
 	}
 
-	init(animationPosition: CGFloat, direction: DoomWipeShader.WipeDirection = .down) {
-		self.animationPosition = animationPosition
+	init(progress: CGFloat, direction: DoomWipeShader.WipeDirection = .down) {
+		self.progress = progress
 		self.direction = direction
 	}
 
@@ -40,12 +39,6 @@ struct DoomWipeTransitionModifier: ViewModifier {
 		content
 			.compositingGroup()
 			.layerEffect(shader, maxSampleOffset: .zero, isEnabled: true)
-			.background(GeometryReader { reader in
-				HStack {}
-					.onAppear {
-						viewDimensions = reader.size
-					}
-			})
 	}
 }
 
@@ -55,8 +48,8 @@ extension AnyTransition {
 		.asymmetric(
 			insertion: .identity,
 			removal: .modifier(
-				active: DoomWipeTransitionModifier(animationPosition: 1),
-				identity: DoomWipeTransitionModifier(animationPosition: 0)
+				active: DoomWipeTransitionModifier(progress: 1),
+				identity: DoomWipeTransitionModifier(progress: 0)
 			)
 		)
 	}
@@ -66,8 +59,8 @@ extension AnyTransition {
 		.asymmetric(
 			insertion: .identity,
 			removal: .modifier(
-				active: DoomWipeTransitionModifier(animationPosition: 1, direction: direction),
-				identity: DoomWipeTransitionModifier(animationPosition: 0, direction: direction)
+				active: DoomWipeTransitionModifier(progress: 1, direction: direction),
+				identity: DoomWipeTransitionModifier(progress: 0, direction: direction)
 			)
 		)
 	}
